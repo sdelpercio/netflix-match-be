@@ -10,7 +10,7 @@ const addUser = ({ id, name, room }) => {
     } else {
         const user = { id, name, room };
 
-        user.push(user);
+        users.push(user);
         return { user }
     }
 }

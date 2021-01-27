@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
         callback();
     })
 
-    socket.on('disconnect', () => {
+    socket.on('endConnection', () => {
         console.log('A connection has left')
     })
 })
