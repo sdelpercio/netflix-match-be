@@ -37,11 +37,11 @@ io.on('connection', (socket) => {
         updateGenres(genre, user.room)
     })
 
-    socket.on('getGenres', (callback) => {
+    socket.on('getGenres', () => {
         const user = getUser(socket.id)
         const genres = getGenres(user.room)
 
-        callback(genres)
+        socket.broadcast.to(user.room).emit('genres', { user: 'admin', genres: genres })
     })
 
     socket.on('endConnection', (genre) => {

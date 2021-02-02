@@ -11,10 +11,6 @@ const updateGenres = (genre, room) => {
         if(existingGenre === -1) {
             genres[room] = [...genres[room], genre]
         }
-        // remove genre from room
-        else {
-            genres[room] = genres[room].filter(g => g !== genre)
-        }
     } else {
         genres[room] = [].push(genre)
     }
@@ -22,7 +18,11 @@ const updateGenres = (genre, room) => {
 
 const getGenres = (room) => {
     room = room.trim().toLowerCase();
-    return genres[room];
+
+    // remove duplicates
+    let uniques = [...new Set(genres[room])]
+
+    return uniques;
 }
 
 // Removes the room from the genres object
