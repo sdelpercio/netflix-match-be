@@ -5,14 +5,10 @@ const updateGenres = (genre, room) => {
     const existingRoom = room in genres;
 
     if(existingRoom) {
-        const existingGenre = genres[room].indexOf(genre)
-
-        // add genre to room
-        if(existingGenre === -1) {
-            genres[room] = [...genres[room], genre]
-        }
+        genres[room] = [...genres[room], genre]
     } else {
-        genres[room] = [].push(genre)
+        genres[room] = []
+        genres[room].push(genre)
     }
 }
 

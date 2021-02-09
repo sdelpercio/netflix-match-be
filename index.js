@@ -39,9 +39,11 @@ io.on('connection', (socket) => {
 
     socket.on('getGenres', () => {
         const user = getUser(socket.id)
+        
         const genres = getGenres(user.room)
 
-        socket.broadcast.to(user.room).emit('genres', { user: 'admin', genres: genres })
+        socket.emit('receiveGenres', genres)
+        socket.broadcast.to(user.room).emit('receiveGenres', genres)
     })
 
     socket.on('endConnection', (genre) => {
