@@ -14,12 +14,13 @@ const io = socketio(server, {
 // module functions
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users.js')
 const { updateGenres, getGenres, removeGenresRoom } = require('./genres.js')
+const { updateMovies, getMovieMatches, removeMoviesRoom } = require('./movies')
 
-// socket functions
+// Sockets
 io.on('connection', (socket) => {
 
+    // Creating User, Joining room
     socket.on('join', ({ name, room }, callback) => {
-        // create user
         const { error, user } = addUser({ id: socket.id, name, room });
         if (error) return callback(error);
 
@@ -31,28 +32,44 @@ io.on('connection', (socket) => {
         callback();
     })
 
+    // Genre Socket Functions
     socket.on('updateGenres', (genre) => {
         const user = getUser(socket.id)
 
         updateGenres(genre, user.room)
     })
-
     socket.on('getGenres', () => {
         const user = getUser(socket.id)
         
         const genres = getGenres(user.room)
 
-        socket.emit('receiveGenres', genres)
-        socket.broadcast.to(user.room).emit('receiveGenres', genres)
+        socket.to(user.room).emit('receiveGenres', genres)
     })
 
-    socket.on('endConnection', (genre) => {
-        removeGenresRoom(genre)
+    // Movie Socket Functions
+    socket.on('updateMovies', (movie) => {
+        const user = getUser(socket.id)
+
+        updateMovies(movie, user.room)
+    })
+    socket.on('getMovies', () => {
+        const user = getUser(socket.id)
+
+        const matches = getMovieMatches(user.room)
+
+        socket.to(user.room).emit('receiveMovies', matches)
+    })
+
+    // User Leaving
+    socket.on('endConnection', (room) => {
+        removeGenresRoom(room)
+        removeMoviesRoom(room)
+
         console.log('A connection has left')
     })
 })
 
-// server
+// Server
 app.use(router)
 const PORT = 5000 || process.env.PORT
 

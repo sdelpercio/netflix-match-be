@@ -28,4 +28,4 @@ const removeMoviesRoom = (room) => {
     delete genres[room]
 }
 
-module.exports = {updateMovies, getMovieMatches, removeMoviesRoom}
+module.exports = { updateMovies, getMovieMatches, removeMoviesRoom } 
