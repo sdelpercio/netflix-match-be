@@ -1,14 +1,14 @@
 const movies = {};
 
-const updateMovies = (move, room) => {
+const updateMovies = (movie, room) => {
     room = room.trim().toLowerCase();
     const existingRoom = room in movies;
 
     if(existingRoom) {
-        movies[room] = [...movies[room], genre]
+        movies[room] = [...movies[room], movie]
     } else {
         movies[room] = []
-        movies[room].push(genre)
+        movies[room].push(movie)
     }
 }
 

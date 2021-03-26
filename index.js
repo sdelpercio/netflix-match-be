@@ -43,7 +43,8 @@ io.on('connection', (socket) => {
         
         const genres = getGenres(user.room)
 
-        socket.to(user.room).emit('receiveGenres', genres)
+        socket.emit('receiveGenres', genres)
+        socket.broadcast.to(user.room).emit('receiveGenres', genres)
     })
 
     // Movie Socket Functions
@@ -57,7 +58,8 @@ io.on('connection', (socket) => {
 
         const matches = getMovieMatches(user.room)
 
-        socket.to(user.room).emit('receiveMovies', matches)
+        socket.emit('receiveMovies', matches)
+        socket.broadcast.to(user.room).emit('receiveMovies', matches)
     })
 
     // User Leaving
