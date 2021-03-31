@@ -1,14 +1,21 @@
 const movies = {};
-
-const updateMovies = (move, room) => {
+const addMovies = (movie, room) => {
     room = room.trim().toLowerCase();
     const existingRoom = room in movies;
 
     if(existingRoom) {
-        movies[room] = [...movies[room], genre]
+        movies[room] = [...movies[room], movie]
     } else {
         movies[room] = []
-        movies[room].push(genre)
+        movies[room].push(movie)
+    }
+}
+const removeMovies = (movie, room) => {
+    room = room.trim().toLowerCase();
+    const existingRoom = room in movies;
+
+    if(existingRoom) {
+        movies[room] = movies[room].filter((prev_id) => movie !== prev_id)
     }
 }
 
@@ -28,4 +35,4 @@ const removeMoviesRoom = (room) => {
     delete genres[room]
 }
 
-module.exports = { updateMovies, getMovieMatches, removeMoviesRoom } 
+module.exports = { addMovies, removeMovies, getMovieMatches, removeMoviesRoom } 
